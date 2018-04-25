@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1524686624 source:d:\lfa\proiect 2\proiect\main.cpp
+	<iostream>
+	<fstream>
+	<string.h>
+
