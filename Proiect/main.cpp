@@ -15,14 +15,14 @@ struct tranzitie {
 
 /**
 *
-*@param stare_act reprezinta nodul in care este programul in acest moment
+*@param stare_act reprezinta starea in care este programul in acest moment
 *@param cuvant reprezinta un string care se modifica de la o apelare recursiva la alta
-*eliminand prima litera a cuvantului
-*@param nr_muchii este numarul total de muchii, fiecare muchie fiind reprezentata de o litera
+*eliminand prima litera a cuvantului la fiecare pas
+*@param nr_muchii este numarul total de tranzitii, fiecare tranzitie fiind reprezentata de o litera
 *@param nr_fin este numarul de stari finale ale automatului
 */
 
-void gramatica_regulata(char stare_act, char cuvant[100], int nr_muchii, int nr_fin) {
+void gramatica_regulata(char stare_act, char cuvant[100], int nr_tranzitii, int nr_fin) {
     int i, OK = 0;
     char copie_cuvant[100];
     if (cuvant[0] == NULL) {
@@ -37,26 +37,26 @@ void gramatica_regulata(char stare_act, char cuvant[100], int nr_muchii, int nr_
             pozitie_cur++;
         }
     }
-    for (i = 0; i < nr_muchii; i++)
+    for (i = 0; i < nr_tranzitii; i++)
         if (tranz[i].actual == stare_act && cuvant[0] == tranz[i].car) {
             strcpy(copie_cuvant, cuvant + 1);
-            gramatica_regulata(tranz[i].urm, copie_cuvant, nr_muchii, nr_fin);
+            gramatica_regulata(tranz[i].urm, copie_cuvant, nr_tranzitii, nr_fin);
         }
 
 }
 
 int main() {
-    int nr_muchii, nr_fin = 0;
+    int nr_tranzitii, nr_fin = 0;
     int i, OK = 0;
-    f >> nr_muchii;
-    for (i = 0; i < nr_muchii; i++) {
+    f >> nr_tranzitii;
+    for (i = 0; i < nr_tranzitii; i++) {
         f >> tranz[i].actual;
         if (i == 0)
             stare_init = tranz[0].actual;
         f >> tranz[i].car;
         f >> tranz[i].urm;
     }
-    for (i = 0; i < nr_muchii; i++)
+    for (i = 0; i < nr_tranzitii; i++)
         if (tranz[i].car == '#') {
             stari_fin[nr_fin] = tranz[i].actual;
             nr_fin++;
@@ -65,7 +65,7 @@ int main() {
     cout << "Introduceti cuvantul:" << endl;
     cin >> cuvant;
     cout << endl;
-    gramatica_regulata(stare_init, cuvant, nr_muchii, nr_fin);
+    gramatica_regulata(stare_init, cuvant, nr_tranzitii, nr_fin);
     for (i = 0; i < pozitie_cur; i++)
         if (v[i] == 1 && OK == 0) {
             OK = 1;
